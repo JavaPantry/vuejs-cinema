@@ -2,7 +2,13 @@ import Vue from 'vue'
 import './style.scss'
 new Vue({
 	el: '#app',
-	data:{
-		msg: "Hello world"
-	}
+	components: {
+		'movie-list': {
+			template: `<div id="movie-list"> movie list </div>`
+		},
+		'movie-filter': {
+			template: `<div id="movie-filter">movie filter</div>`
+		}
+	},
+	data:{}
 })
