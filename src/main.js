@@ -4,6 +4,11 @@ import genres from './util/genres'
 
 new Vue({
 	el: '#app',
+	methods: {
+		checkFilter( category, title, checked){
+			console.log('Root on checkFilter event' , category, title, checked)
+		}
+	},
 	components: {
 		'movie-list': {
 			template: `<div id="movie-list">
@@ -38,8 +43,9 @@ new Vue({
 							
 					   </div>`,
 			methods: {
-				checkFilter(){
+				checkFilter(category, title, checked){
 					console.log('on checkFilter event')
+					this.$emit('check-filter', category, title, checked)
 				}
 			},
 			components: {
@@ -57,7 +63,7 @@ new Vue({
 					methods: {
 						checkFilter(){
 							this.checked = !this.checked
-							this.$emit('check-filter')
+							this.$emit('check-filter', 'genre', this.title, this.checked )
 						}
 					}
 				}
