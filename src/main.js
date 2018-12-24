@@ -4,27 +4,58 @@ import genres from './util/genres'
 
 new Vue({
 	el: '#app',
+	data(){
+		return {
+			genre:[],
+			time:[]
+		}
+	},
 	methods: {
 		checkFilter( category, title, checked){
 			console.log('Root on checkFilter event' , category, title, checked)
+			if(checked){
+				this[category].push(title)
+			}else{
+				let index = this[category].indexOf(title);
+				if (index === -1)
+					return
+				this[category].splice(index,1);
+			}
 		}
 	},
 	components: {
 		'movie-list': {
 			template: `<div id="movie-list">
-							<div v-for="movie in movies" class="movie">
+							<div v-for="movie in filteredMovies" class="movie">
 								{{movie.title}}
 							</div> 
                        </div>`,
+			methods: {
+				moviePassesGenreFilter(movie){
+					if(!this.genre.length)
+						return true
+					return this.genre.find(genre => movie.genre === genre )
+				}
+			},
+			computed:{
+				filteredMovies(){
+					return this.movies.filter(this.moviePassesGenreFilter)
+				}
+			},
 			data() {
 				return{
 				movies: [
-					{title:'Pulp Fiction'},
-					{title:'Home alone'},
-					{title:'God Father I'},
-					{title:'God Father II'},
+					{title:'Pulp Fiction', genre: genres.CRIME},
+					{title:'Home alone', genre: genres.COMEDY},
+					{title:'Austin Powers', genre: genres.COMEDY},
+					{title:'God Father I', genre: genres.CRIME},
+					{title:'God Father II', genre: genres.CRIME},
+					{title:'Blue Planet', genre: genres.DOCUMENTARY},
+					{title:'DRAMA Movie', genre: genres.DRAMA},
+					{title:'HORROR Movie', genre: genres.HORROR}
 				]}
-			}
+			},
+			props:['genre', 'time']
 		},
 		'movie-filter': {
 			data(){
@@ -69,6 +100,5 @@ new Vue({
 				}
 			}
 		}
-	},
-	data:{}
+	}
 })
