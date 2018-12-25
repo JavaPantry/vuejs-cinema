@@ -11,11 +11,21 @@
 	import MovieItem from './MovieItem.vue';
 
 	export default {
+		props:['genre', 'time', 'movies'],
 		methods: {
-			moviePassesGenreFilter(movie){
-				if(!this.genre.length)
-					return true
-				return this.genre.find(genre => movie.genre === genre )
+			moviePassesGenreFilter(movie) {
+				if (!this.genre.length) {
+					return true;
+				} else {
+					let movieGenres = movie.movie.Genre.split(", ");
+					let matched = true;
+					this.genre.forEach(genre => {
+						if (movieGenres.indexOf(genre) === -1) {
+							matched = false;
+						}
+					});
+					return matched;
+				}
 			}
 		},
 		computed:{
@@ -23,7 +33,6 @@
 				return this.movies.filter(this.moviePassesGenreFilter)
 			}
 		},
-		props:['genre', 'time', 'movies'],
 		components: {
 			MovieItem
 		}
