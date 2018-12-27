@@ -5,7 +5,9 @@
 		</div>
 		<div class="movie-col-right">
 			<div class="movie-title">
-				<h2>{{ movie.Title }}</h2>
+				<router-link v-bind:to="{ name: 'movie', params: { id: movie.imdbID } }">
+					<h2>{{ movie.Title }}</h2>
+				</router-link>
 				<span class="movie-rating">{{ movie.Rated }}</span>
 			</div>
 			<div class="movie-sessions">
@@ -17,8 +19,8 @@
 	</div>
 </template>
 <script>
-
     import times from '../util/times';
+
 	export default {
 		props: ['movie', 'sessions', 'day' , 'time'],
 		methods: {
