@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import './style.scss'
 
-import Overview from './components/Overview.vue'
-
 import VueResource from 'vue-resource'
 Vue.use(VueResource)
 
@@ -32,9 +30,6 @@ new Vue({
 			bus
 		}
 	},
-	components: {
-        Overview
-		},
 	created() {
 		this.$http.get('/api').then(response => {
 			this.movies = response.data;
