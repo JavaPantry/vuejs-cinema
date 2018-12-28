@@ -38,4 +38,10 @@ new Vue({
         this.$bus.$on('set-day', setDay.bind(this));
 	},
 	router
-})
+});
+
+Vue.directive('tooltip', {
+    bind(el, bindings) {
+        console.log(el);
+    }
+});
